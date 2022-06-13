@@ -20,3 +20,8 @@ With Docker:
 docker build -t exam-checker .
 docker run -it exam-checker
 ```
+
+## Configuration
+
+- **KUSS Session**: Can be extracted with any browser. 
+- **Discord Webhook:** Sends notifications using the webhook.
