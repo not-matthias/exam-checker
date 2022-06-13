@@ -25,7 +25,7 @@ def check():
         exit(1)
     
     content = res.text.replace("\t", "").replace("\n", "")
-    if 'Maximale TeilnehmerInnenzahl: 174' in content:
+    if 'Bisherige Anmeldungen: 174' in content:
         return False
     else:
         return True
