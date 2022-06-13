@@ -44,4 +44,4 @@ while True:
     else:
         print("No open slots available")
 
-    sleep(1 * 60)
+    sleep(10 * 60)
