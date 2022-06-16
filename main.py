@@ -10,6 +10,8 @@ cookies = {
     os.getenv("KUSS_SESSION"): os.getenv("KUSS_CREDENTIALS")
 }
 
+available = False
+
 def sendNotification(message):
     url = os.getenv("DISCORD_WEBHOOK")
 
@@ -25,6 +27,12 @@ def check():
         exit(1)
     
     content = res.text.replace("\t", "").replace("\n", "")
+
+
+    if 'Maximale TeilnehmerInnenzahl: 174' not in content:
+        print("Invalid session key")
+        exit(0);
+
     if 'Bisherige Anmeldungen: 174' in content:
         return False
     else:
@@ -36,12 +44,19 @@ if not os.getenv("KUSS_SESSION") or not os.getenv("KUSS_CREDENTIALS"):
     exit(0)
 
 while True:
-    print("Checking...")
-    
     if check():
-        sendNotification("Exam slots are available")
-        print("New slots available")
+        # Don't send it twice for the same spot.
+        if not available:
+            sendNotification("Exam spot is available")
+            print("New spot available")
+
+        available = True
     else:
-        print("No open slots available")
+        # Send message that the spot has been taken
+        if available:
+            sendNotification("Exam spot has been taken")
+            print("Exam spot has been taken")
+            
+        available = False
 
     sleep(10 * 60)
